@@ -1,12 +1,32 @@
 package com.example.demo.entities;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.List;
 
+@Entity // 默认类名小写变表名
 public class User {
+    @Id
+    @Email
+    @NotEmpty
+    @Column(unique = true)
     private String email;
+    @NotEmpty
     private String name;
+    @Size(min = 4)
     private String password;
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL) //  CascadeType.ALL级联更新
+//    @OneToMany(cascade = CascadeType.ALL) //  CascadeType.ALL级联更新
     private List<Task> tasks;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "USER_ROLES",joinColumns = { // 连接表默认回把所有字母小写生成新表
+            @JoinColumn(name = "USER_EMAIL",referencedColumnName = "email") // 有name后面的默认都会变成小写
+    },inverseJoinColumns = {
+            @JoinColumn(name = "ROLE_NAME",referencedColumnName = "name")
+    })
     private List<Role> roles;
 
     public String getEmail() {

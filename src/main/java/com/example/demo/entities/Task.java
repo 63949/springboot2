@@ -1,11 +1,24 @@
 package com.example.demo.entities;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.persistence.*;
+
+@Entity
 public class Task {
+    @Id
+    @GeneratedValue
     private Long id;
+    @NotEmpty
     private String date;
+    @NotEmpty
     private String startTime;
+    @NotEmpty
     private String stopTime;
+    @NotEmpty
     private String description;
+    @ManyToOne// 这里不能有mappedBy因为在user表中不能放入Task的id
+    @JoinColumn(name = "USER_EMAIL")
     private User user;
 
     public Long getId() {
