@@ -36,7 +36,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        super.configure(http); 这里必须把默认的实现干掉
         http.authorizeRequests()
                 .antMatchers("/register","/","/about","/login","/css/**","/webjars/**").permitAll()// 允许访问的网址
-                .anyRequest().authenticated() // 其它的都要登录验证
+                .antMatchers("/profile").hasAnyRole("USER,ADMIN")
+                .antMatchers("/users","/addTask").hasRole("ADMIN")
+//                .anyRequest().authenticated() // 其它的都要登录验证
                 .and().formLogin().loginPage("/login").permitAll() // 指定登录页面
                 .defaultSuccessUrl("/profile") // 默认登录成功后转入页面
                 .and().logout().logoutSuccessUrl("/login"); // 默认登出成功页面
