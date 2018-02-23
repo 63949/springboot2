@@ -5,11 +5,12 @@ import com.example.demo.entities.User;
 import com.example.demo.service.TaskService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class DemoApplication {
+public class DemoApplication implements CommandLineRunner {
 
 	@Autowired
 	UserService userService;
@@ -26,5 +27,12 @@ public class DemoApplication {
 		listTask.add(task);
 		user.setTasks(listTask);
 		userRepository.save(user);*/
+	}
+
+
+	@Override
+	public void run(String... strings) throws Exception {
+		User newAdmin = new User("admin@163.com","admin","123456");
+		userService.createAdmin(newAdmin);
 	}
 }
