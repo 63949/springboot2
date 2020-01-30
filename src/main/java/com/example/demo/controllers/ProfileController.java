@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.security.Principal;
+import java.util.Optional;
 
 @Controller
 public class ProfileController {
@@ -19,7 +20,7 @@ public class ProfileController {
     @GetMapping("/profile")
     public String showProfilePage(Model model, Principal principal){
         String email = principal.getName();
-        User user = userService.findOne(email);
+        Optional<User> user = userService.findOne(email);
         model.addAttribute("tasks",taskService.findUserTask(user));
         return "views/profile";
     }

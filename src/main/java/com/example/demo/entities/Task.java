@@ -2,6 +2,8 @@ package com.example.demo.entities;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import java.util.Optional;
+
 import javax.persistence.*;
 
 @Entity
@@ -65,8 +67,8 @@ public class Task {
         return user;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(User optional) {
+        this.user = optional;
     }
 
     public Task(String date, String startTime, String stopTime, String description, User user) {

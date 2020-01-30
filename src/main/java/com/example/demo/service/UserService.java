@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -35,12 +36,14 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public User findOne(String email) {
-        return userRepository.findOne(email);
+    public Optional<User> findOne(String email) {
+//        return userRepository.findOne(email);
+        return userRepository.findById(email);
     }
 
     public boolean isUserPresent(String email) {
-        User u = userRepository.findOne(email);
+//        User u = userRepository.findOne(email);
+        Optional<User> u = userRepository.findById(email);
         if (u!=null){
             return true;
         }
